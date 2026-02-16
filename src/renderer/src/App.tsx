@@ -10,7 +10,7 @@ function App(): React.JSX.Element {
     const fetchData = async (): Promise<void> => {
       try {
         const result = await window.api.request('/api/profile', 'GET')
-        setData(result)
+        setData(result.data)
       } catch (error) {
         console.error('Failed to fetch profile from Hono worker:', error)
       }

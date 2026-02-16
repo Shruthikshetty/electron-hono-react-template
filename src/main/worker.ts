@@ -3,12 +3,17 @@
  * it runs separately from the main process
  * and handles all the requests from the renderer process
  */
+import configureOpenApi from './config/open-api-config'
 import createApp from './lib/create-app'
 import base from './routes/index.route'
 import profile from './routes/profile/profile.index'
+import { serve } from '@hono/node-server'
 
 // create hono app
 const app = createApp()
+
+//configure open api
+configureOpenApi(app)
 
 // all routes go here
 const routes = [base, profile]
@@ -16,10 +21,19 @@ const routes = [base, profile]
 routes.forEach((route) => {
   if (route === base) {
     app.route('/', route)
+    return
   }
   // for all other routes add /api prefix
   app.route('/api', route)
 })
+
+// expose the app for local development only
+if (process.env.NODE_ENV === 'development') {
+  serve({
+    fetch: app.fetch,
+    port: 3000 // local dev only
+  })
+}
 
 // listen to message from main process this will be used to send request to hono app
 process.parentPort.on('message', async (e) => {

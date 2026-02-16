@@ -8,5 +8,10 @@ import { GetProfileRoute } from './profile.routes'
 // handler for getting profile data
 export const getProfile: AppRouteHandler<GetProfileRoute> = async (c) => {
   // get the profile data
-  return c.json(EXAMPLE_DATA, 200)
+  return c.json(
+    {
+      data: EXAMPLE_DATA
+    },
+    200
+  )
 }
