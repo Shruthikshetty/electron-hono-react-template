@@ -2,24 +2,25 @@
  * @file contains all the routes related to profile with Zod Open Api support
  */
 
-import { createRoute, z } from '@hono/zod-openapi'
+import { createRoute } from '@hono/zod-openapi'
+import { profileSchema } from '../../../common/schemas/profile'
 
+// route to get profile data
 export const getProfile = createRoute({
   tags: ['profile'],
   method: 'get',
-  path: '/api/profile',
+  path: '/profile',
   responses: {
     200: {
       content: {
         'application/json': {
-          schema: z.object({
-            name: z.string(),
-            age: z.number(),
-            city: z.string()
-          })
+          schema: profileSchema
         }
       },
       description: 'success response for profile route'
     }
   }
 })
+
+// export all the route types
+export type GetProfileRoute = typeof getProfile

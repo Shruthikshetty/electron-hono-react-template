@@ -1,10 +1,12 @@
 import { OpenAPIHono } from '@hono/zod-openapi'
 
+import { AppBindings } from '../types'
+
 /**
  * This will create the router for the app with Zod Open Api support
  */
 export const createRouter = () => {
-  const router = new OpenAPIHono({
+  const router = new OpenAPIHono<AppBindings>({
     strict: false
   })
 
