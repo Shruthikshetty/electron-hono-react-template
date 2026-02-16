@@ -1,17 +1,15 @@
-import { Hono } from 'hono'
-import { EXAMPLE_DATA } from '../common/constants/global.constants'
+import createApp from './lib/create-app'
+import base from './routes/index.route'
+import profile from './routes/profile/profile.index'
 
 // create hono app
-const app = new Hono()
+const app = createApp()
 
-// all hono routes
-app.get('/profile', async (c) => {
-  return c.json(EXAMPLE_DATA)
-})
+// all routes go here
+const routes = [base, profile]
 
-app.post('/user', async (c) => {
-  const body = await c.req.json()
-  return c.json(body)
+routes.forEach((route) => {
+  app.route('/', route)
 })
 
 // listen to message from main process this will be used to send request to hono app

@@ -9,7 +9,7 @@ function App(): React.JSX.Element {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        const result = await window.api.request('/profile', 'GET')
+        const result = await window.api.request('/api/profile', 'GET')
         setData(result)
       } catch (error) {
         console.error('Failed to fetch profile from Hono worker:', error)
@@ -31,14 +31,14 @@ function App(): React.JSX.Element {
         <p>Loading...</p>
       )}
       <button
-        onClick={async () => {
-          const res = await window.api.request('/user', 'POST', {
-            name: 'Jane Doe',
-            age: 55,
-            city: 'London'
-          })
-          setData(res)
-        }}
+      // onClick={async () => {
+      //   const res = await window.api.request('/user', 'POST', {
+      //     name: 'Jane Doe',
+      //     age: 55,
+      //     city: 'London'
+      //   })
+      //   setData(res)
+      // }}
       >
         Update Profile (POST)
       </button>
