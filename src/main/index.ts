@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, utilityProcess, MessageChannelMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -49,8 +49,27 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  // Spawn worker process
+  const worker = utilityProcess.fork(join(__dirname, '../main/worker.js'))
+
+  // Handle Hono requests from renderer
+  ipcMain.handle('hono-request', async (_event, { path, method, body }) => {
+    return new Promise((resolve) => {
+      // Create a message channel for this specific request
+      const { port1, port2 } = new MessageChannelMain()
+
+      // Send the request to the worker along with the port2
+      // We'll use port2 in the worker to send the response back
+      worker.postMessage({ type: 'hono-request', path, method, body }, [port2])
+
+      // Listen for the response on port1
+      port1.on('message', (event) => {
+        resolve(event.data)
+        port1.close()
+      })
+      port1.start()
+    })
+  })
 
   createWindow()
 

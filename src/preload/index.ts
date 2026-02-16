@@ -1,8 +1,13 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
-const api = {}
+const api = {
+  // this is a generic function that can be used to send request to hono app
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  request: (path: string, method = 'GET', body?: any) =>
+    ipcRenderer.invoke('hono-request', { path, method, body })
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
