@@ -23,7 +23,8 @@ export const getProfile = createRoute({
         }
       },
       description: 'success response for profile route'
-    }
+    },
+    [HTTP_STATUS_CODES.NOT_FOUND]: zodNotFoundDocObject
   }
 })
 
@@ -53,10 +54,10 @@ export const updateProfile = createRoute({
           })
         }
       },
-      description: 'success response for profile route',
-      [HTTP_STATUS_CODES.NOT_FOUND]: zodNotFoundDocObject,
-      [HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY]: zodValidationErrorDocObject
-    }
+      description: 'success response for profile route'
+    },
+    [HTTP_STATUS_CODES.NOT_FOUND]: zodNotFoundDocObject,
+    [HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY]: zodValidationErrorDocObject
   }
 })
 

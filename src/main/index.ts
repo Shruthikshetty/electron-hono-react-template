@@ -80,7 +80,7 @@ app.whenReady().then(() => {
 
   // Handle Hono requests from renderer
   ipcMain.handle('hono-request', async (_event, { path, method, body }) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       // Create a message channel for this specific request
       const { port1, port2 } = new MessageChannelMain()
 
@@ -88,8 +88,15 @@ app.whenReady().then(() => {
       // We'll use port2 in the worker to send the response back
       worker.postMessage({ type: 'hono-request', path, method, body }, [port2])
 
+      // Set a timeout for the request
+      const timeout = setTimeout(() => {
+        port1.close()
+        reject(new Error('Worker request timed out'))
+      }, 30_000)
+
       // Listen for the response on port1
       port1.on('message', (event) => {
+        clearTimeout(timeout)
         resolve(event.data)
         port1.close()
       })

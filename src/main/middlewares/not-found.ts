@@ -3,10 +3,12 @@ import * as HTTP_STATUS_CODES from '../constants/http-status-codes.constants'
 import { NotFoundHandler } from 'hono'
 
 const handleNotFound: NotFoundHandler = (c) => {
-  return c.json({
-    message: 'route not found',
-    statusCode: HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY
-  })
+  return c.json(
+    {
+      message: 'route not found'
+    },
+    HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY
+  )
 }
 
 export default handleNotFound
