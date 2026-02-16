@@ -2,6 +2,7 @@ import { OpenAPIHono } from '@hono/zod-openapi'
 
 import { AppBindings } from '../types'
 import handleNotFound from '../middlewares/not-found.middleware'
+import { appLogger } from '../middlewares/app-logger'
 
 /**
  * This will create the router for the app with Zod Open Api support
@@ -20,6 +21,7 @@ const createApp = () => {
 
   // middlewares go here
   app.notFound(handleNotFound)
+  app.use(appLogger)
 
   return app
 }
