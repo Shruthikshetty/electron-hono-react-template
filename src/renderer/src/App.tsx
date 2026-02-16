@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { EXAMPLE_DATA } from '@common/constants/global.constants'
+import Versions from './components/Versions'
 
 function App(): React.JSX.Element {
   // get data from worker
@@ -31,17 +32,19 @@ function App(): React.JSX.Element {
         <p>Loading...</p>
       )}
       <button
-      // onClick={async () => {
-      //   const res = await window.api.request('/user', 'POST', {
-      //     name: 'Jane Doe',
-      //     age: 55,
-      //     city: 'London'
-      //   })
-      //   setData(res)
-      // }}
+        onClick={async () => {
+          const res = await window.api.request('/api/profile', 'PATCH', {
+            name: 'Jane Doe',
+            age: 55,
+            city: 'London'
+          })
+          console.log(res)
+          setData(res.data)
+        }}
       >
-        Update Profile (POST)
+        Update Profile (PATCH)
       </button>
+      <Versions />
     </div>
   )
 }

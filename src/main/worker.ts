@@ -45,6 +45,7 @@ process.parentPort.on('message', async (e) => {
       const res = await app.fetch(
         new Request(`http://localhost${path}`, {
           method,
+          headers: body ? { 'Content-Type': 'application/json' } : undefined,
           body: body ? JSON.stringify(body) : undefined
         })
       )

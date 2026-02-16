@@ -4,7 +4,9 @@ import * as handlers from './profile.handlers'
 import * as routes from './profile.routes'
 
 // create the router
-const router = createRouter().openapi(routes.getProfile, handlers.getProfile)
+const router = createRouter()
+  .openapi(routes.getProfile, handlers.getProfile)
+  .openapi(routes.updateProfile, handlers.updateProfile)
 
 // add all the routes
 export default router

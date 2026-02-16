@@ -5,6 +5,7 @@
 import { createRoute, z } from '@hono/zod-openapi'
 import { profileSchema } from '../../../common/schemas/profile'
 import * as HTTP_STATUS_CODES from '../../constants/http-status-codes.constants'
+import { zodNotFoundDocObject, zodValidationErrorDocObject } from '../../constants/doc-constants'
 
 // route to get profile data
 export const getProfile = createRoute({
@@ -16,7 +17,8 @@ export const getProfile = createRoute({
       content: {
         'application/json': {
           schema: z.object({
-            data: profileSchema
+            data: profileSchema,
+            success: z.boolean()
           })
         }
       },
@@ -25,5 +27,39 @@ export const getProfile = createRoute({
   }
 })
 
+// route to update profile data
+export const updateProfile = createRoute({
+  tags: ['profile'],
+  method: 'patch',
+  path: '/profile',
+  request: {
+    body: {
+      required: true,
+      content: {
+        'application/json': {
+          schema: profileSchema
+        }
+      },
+      description: 'request body for update profile route'
+    }
+  },
+  responses: {
+    [HTTP_STATUS_CODES.OK]: {
+      content: {
+        'application/json': {
+          schema: z.object({
+            data: profileSchema,
+            success: z.boolean()
+          })
+        }
+      },
+      description: 'success response for profile route',
+      [HTTP_STATUS_CODES.NOT_FOUND]: zodNotFoundDocObject,
+      [HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY]: zodValidationErrorDocObject
+    }
+  }
+})
+
 // export all the route types
 export type GetProfileRoute = typeof getProfile
+export type UpdateProfileRoute = typeof updateProfile
