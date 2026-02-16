@@ -4,6 +4,7 @@
 
 import { createRoute, z } from '@hono/zod-openapi'
 import { profileSchema } from '../../../common/schemas/profile'
+import * as HTTP_STATUS_CODES from '../../constants/http-status-codes.constants'
 
 // route to get profile data
 export const getProfile = createRoute({
@@ -11,7 +12,7 @@ export const getProfile = createRoute({
   method: 'get',
   path: '/profile',
   responses: {
-    200: {
+    [HTTP_STATUS_CODES.OK]: {
       content: {
         'application/json': {
           schema: z.object({
