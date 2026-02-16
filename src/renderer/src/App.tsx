@@ -1,34 +1,51 @@
+import { useEffect, useState } from 'react'
+import { EXAMPLE_DATA } from '@common/constants/global.constants'
 import Versions from './components/Versions'
-import electronLogo from './assets/electron.svg'
 
 function App(): React.JSX.Element {
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
+  // get data from worker
+  const [data, setData] = useState<typeof EXAMPLE_DATA | null>(null)
 
+  // fetch data
+  useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      try {
+        const result = await window.api.request('/api/profile', 'GET')
+        setData(result.data)
+      } catch (error) {
+        console.error('Failed to fetch profile from Hono worker:', error)
+      }
+    }
+
+    fetchData()
+  }, [])
   return (
-    <>
-      <img alt="logo" className="logo" src={electronLogo} />
-      <div className="creator">Powered by electron-vite</div>
-      <div className="text">
-        Build an Electron app with <span className="react">React</span>
-        &nbsp;and <span className="ts">TypeScript</span>
-      </div>
-      <p className="tip">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-      <div className="actions">
-        <div className="action">
-          <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
-            Documentation
-          </a>
+    <div>
+      <h1>Hello</h1>
+      {data ? (
+        <div>
+          <p>Name: {data.name}</p>
+          <p>Age: {data.age}</p>
+          <p>City: {data.city}</p>
         </div>
-        <div className="action">
-          <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
-            Send IPC
-          </a>
-        </div>
-      </div>
-      <Versions></Versions>
-    </>
+      ) : (
+        <p>Loading...</p>
+      )}
+      <button
+        onClick={async () => {
+          const res = await window.api.request('/api/profile', 'PATCH', {
+            name: 'Jane Doe',
+            age: 55,
+            city: 'London'
+          })
+          console.log(res)
+          setData(res.data)
+        }}
+      >
+        Update Profile (PATCH)
+      </button>
+      <Versions />
+    </div>
   )
 }
 
