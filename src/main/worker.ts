@@ -41,14 +41,20 @@ process.parentPort.on('message', async (e) => {
   const { type, path, method, body } = e.data
 
   if (type === 'hono-request') {
-    const res = await app.fetch(
-      new Request(`http://localhost${path}`, {
-        method,
-        body: body ? JSON.stringify(body) : undefined
-      })
-    )
-    const result = await res.json()
-    port.postMessage(result)
-    port.close()
+    try {
+      const res = await app.fetch(
+        new Request(`http://localhost${path}`, {
+          method,
+          body: body ? JSON.stringify(body) : undefined
+        })
+      )
+      const result = await res.json()
+      port.postMessage(result)
+    } catch (error) {
+      console.error('Worker request failed:', error)
+      port.postMessage({ error: 'Worker request failed', details: String(error) })
+    } finally {
+      port.close()
+    }
   }
 })

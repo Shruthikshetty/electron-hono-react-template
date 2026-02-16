@@ -50,7 +50,33 @@ app.whenReady().then(() => {
   })
 
   // Spawn worker process
-  const worker = utilityProcess.fork(join(__dirname, '../main/worker.js'))
+  const worker = utilityProcess.fork(join(__dirname, 'worker.js'), [], {
+    stdio: 'pipe'
+  })
+
+  worker.on('spawn', () => {
+    console.log('Worker spawned')
+  })
+
+  worker.on('error', (err) => {
+    console.error('Worker error:', err)
+  })
+
+  worker.on('exit', (code) => {
+    console.error('Worker exited with code:', code)
+  })
+
+  if (worker.stdout) {
+    worker.stdout.on('data', (data) => {
+      console.log(`[Worker Output]: ${data}`)
+    })
+  }
+
+  if (worker.stderr) {
+    worker.stderr.on('data', (data) => {
+      console.error(`[Worker Error]: ${data}`)
+    })
+  }
 
   // Handle Hono requests from renderer
   ipcMain.handle('hono-request', async (_event, { path, method, body }) => {

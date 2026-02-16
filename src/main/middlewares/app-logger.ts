@@ -7,15 +7,19 @@ export const appLogger = pinoLogger({
   pino: {
     enabled: isDev, // enable only in development
     level: 'debug',
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
-        translateTime: 'SYS:standard',
-        singleLine: true,
-        ignore: 'pid,hostname'
-      }
-    }
+    ...(isDev
+      ? {
+          transport: {
+            target: 'pino-pretty',
+            options: {
+              colorize: true,
+              translateTime: 'SYS:standard',
+              singleLine: true,
+              ignore: 'pid,hostname'
+            }
+          }
+        }
+      : {})
   },
   http: {
     reqId: () => crypto.randomUUID(),
