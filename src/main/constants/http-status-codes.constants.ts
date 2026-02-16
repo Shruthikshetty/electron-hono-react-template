@@ -83,12 +83,6 @@ export const IM_A_TEAPOT = 418
  *
  * The 507 (Insufficient Storage) status code means the method could not be performed on the resource because the server is unable to store the representation needed to successfully complete the request. This condition is considered to be temporary. If the request which received this status code was the result of a user action, the request MUST NOT be repeated until it is requested by a separate user action.
  */
-export const INSUFFICIENT_SPACE_ON_RESOURCE = 419
-/**
- * Official Documentation @ https://tools.ietf.org/html/rfc2518#section-10.6
- *
- * The server has an internal configuration error: the chosen variant resource is configured to engage in transparent content negotiation itself, and is therefore not a proper end point in the negotiation process.
- */
 export const INSUFFICIENT_STORAGE = 507
 /**
  * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.6.1
