@@ -6,3 +6,7 @@ out
 *.log*
 .env
 .vscode
+
+# data base 
+dev.db
+test.db

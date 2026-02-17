@@ -3,9 +3,9 @@
  */
 
 import { createRoute, z } from '@hono/zod-openapi'
-import { profileSchema } from '../../../common/schemas/profile'
 import * as HTTP_STATUS_CODES from '../../constants/http-status-codes.constants'
 import { zodNotFoundDocObject, zodValidationErrorDocObject } from '../../constants/doc-constants'
+import { userPatchSchema, usersGetSchema } from '../../db/schema'
 
 // route to get profile data
 export const getProfile = createRoute({
@@ -17,7 +17,7 @@ export const getProfile = createRoute({
       content: {
         'application/json': {
           schema: z.object({
-            data: profileSchema,
+            data: usersGetSchema,
             success: z.boolean()
           })
         }
@@ -38,7 +38,7 @@ export const updateProfile = createRoute({
       required: true,
       content: {
         'application/json': {
-          schema: profileSchema
+          schema: userPatchSchema
         }
       },
       description: 'request body for update profile route'
@@ -49,7 +49,7 @@ export const updateProfile = createRoute({
       content: {
         'application/json': {
           schema: z.object({
-            data: profileSchema,
+            data: usersGetSchema,
             success: z.boolean()
           })
         }
