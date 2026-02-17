@@ -10,3 +10,6 @@ out
 # data base 
 dev.db
 test.db
+
+# env files
+.env.test

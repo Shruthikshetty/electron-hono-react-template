@@ -6,7 +6,6 @@ import { GetProfileRoute, UpdateProfileRoute } from './profile.routes'
 import * as HTTP_STATUS_CODES from '../../constants/http-status-codes.constants'
 import db from '../../db'
 import { users } from '../../db/schema'
-import { eq } from 'drizzle-orm'
 
 // handler for getting profile data
 export const getProfile: AppRouteHandler<GetProfileRoute> = async (c) => {
@@ -39,7 +38,7 @@ export const updateProfile: AppRouteHandler<UpdateProfileRoute> = async (c) => {
   const data = c.req.valid('json')
 
   // update the profile data in db
-  const [updatedProfileData] = await db.update(users).set(data).where(eq(users.id, 1)).returning()
+  const [updatedProfileData] = await db.update(users).set(data).returning()
 
   // if profile data is not found
   if (!updatedProfileData) {

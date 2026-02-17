@@ -1,6 +1,6 @@
 import { OpenAPIHono } from '@hono/zod-openapi'
 
-import { AppBindings } from '../types'
+import { AppBindings, AppOpenApi } from '../types'
 import handleNotFound from '../middlewares/not-found'
 import { appLogger } from '../middlewares/app-logger'
 import validationErrorHandler from '../middlewares/validation-error-handler'
@@ -31,3 +31,10 @@ const createApp = () => {
 }
 
 export default createApp
+
+// so that our test can have all the middlewares
+export function createTestApp(router: AppOpenApi) {
+  const testApp = createApp()
+  testApp.route('/api', router)
+  return testApp
+}
