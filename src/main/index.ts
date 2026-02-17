@@ -51,7 +51,12 @@ app.whenReady().then(() => {
 
   // Spawn worker process
   const worker = utilityProcess.fork(join(__dirname, 'worker.js'), [], {
-    stdio: 'pipe'
+    stdio: 'pipe',
+    env: {
+      ...process.env,
+      APP_USER_DATA: app.getPath('userData'),
+      APP_RESOURCES_PATH: app.isPackaged ? process.resourcesPath : app.getAppPath()
+    }
   })
 
   worker.on('spawn', () => {

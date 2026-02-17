@@ -26,4 +26,4 @@ if (error) {
   process.exit(1)
 }
 //export type safe env
-export default env
+export default env as ENV
