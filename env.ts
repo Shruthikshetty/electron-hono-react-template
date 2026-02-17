@@ -25,5 +25,5 @@ if (error) {
   console.error('Invalid environment variables: ', error.flatten())
   process.exit(1)
 }
-//export type save env
+//export type safe env
 export default env
