@@ -7,7 +7,7 @@ out
 .env
 .vscode
 
-# data base 
+# database 
 dev.db
 test.db
 

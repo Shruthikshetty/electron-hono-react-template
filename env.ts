@@ -18,19 +18,12 @@ const EnvSchema = z.object({
   DATABASE_URL: z.url('').default('file:dev.db')
 })
 
-type ENV = z.infer<typeof EnvSchema>
+export type ENV = z.infer<typeof EnvSchema>
 
-let tempEnv: ENV
-
-try {
-  tempEnv = EnvSchema.parse(process.env)
-} catch (err) {
-  const error = err as z.ZodError
-  console.error('Invalid environment variables: ', z.flattenError(error))
-  //exist the app in case of error
+const { data: env, error } = EnvSchema.safeParse(process.env)
+if (error) {
+  console.error('Invalid environment variables: ', error.flatten())
   process.exit(1)
 }
-
-const env = tempEnv
 //export type save env
 export default env

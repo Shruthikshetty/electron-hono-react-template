@@ -10,7 +10,7 @@ import { testClient } from 'hono/testing'
 
 describe('profile routes', () => {
   beforeAll(async () => {
-    execSync('bun drizzle-kit push')
+    execSync('drizzle-kit push')
 
     // add dummy data into db
 
@@ -30,9 +30,9 @@ describe('profile routes', () => {
     }
   })
   //METHOD 1
-  it('should return profile  /profile GET', async () => {
+  it('should return profile /profile GET', async () => {
     const client = createTestApp(router)
-    const response = await client.request('api/profile')
+    const response = await client.request('/api/profile')
     const result = await response.json()
     console.log(result)
     // expect the result to have a data property
@@ -47,7 +47,7 @@ describe('profile routes', () => {
     )
   })
   //METHOD 2 typesafty
-  it('prole to be able to update thr data , profile PATCH', async () => {
+  it('should be able to update the data, profile PATCH', async () => {
     const client = testClient(createApp().route('/', router))
     const response = await client.profile.$patch({
       json: {
