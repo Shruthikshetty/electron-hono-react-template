@@ -16,5 +16,6 @@ defines a zod schema for not found error
 */
 
 export const AppNotFoundErrorSchema = z.object({
-  message: z.string()
+  message: z.string(),
+  success: z.boolean()
 })

@@ -6,7 +6,8 @@ export const zodNotFoundDocObject = {
     'application/json': {
       schema: AppNotFoundErrorSchema.openapi({
         example: {
-          message: 'Not found'
+          message: 'Not found',
+          success: false
         }
       })
     }
