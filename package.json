@@ -31,12 +31,14 @@
     "@hono/zod-openapi": "^1.2.2",
     "@libsql/client": "^0.17.0",
     "@scalar/hono-api-reference": "^0.9.41",
+    "@tailwindcss/vite": "^4.2.0",
     "drizzle-orm": "^0.45.1",
     "drizzle-zod": "^0.8.3",
     "electron-updater": "^6.3.9",
     "hono": "^4.11.9",
     "hono-pino": "^0.10.3",
     "pino": "^10.3.1",
+    "tailwindcss": "^4.2.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

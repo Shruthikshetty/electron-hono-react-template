@@ -16,12 +16,15 @@ import { seed } from './db/seed'
 const app = createApp()
 
 // run migrations
-const migrationPromise = runMigrations()
-  .then(() => seed())
-  .catch((err) => {
-    console.error('Migration/Seed failed:', err)
-    process.exit(1)
-  })
+const migrationPromise =
+  process.env.NODE_ENV === 'development'
+    ? Promise.resolve()
+    : runMigrations()
+        .then(() => seed())
+        .catch((err) => {
+          console.error('Migration/Seed failed:', err)
+          process.exit(1)
+        })
 
 //configure open api
 configureOpenApi(app)
