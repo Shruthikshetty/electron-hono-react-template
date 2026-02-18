@@ -22,6 +22,7 @@
     "build:linux": "electron-vite build && electron-builder --linux",
     "drizzle:generate": "drizzle-kit generate",
     "drizzle:studio": "drizzle-kit studio",
+    "drizzle:push": "drizzle-kit push",
     "test": "vitest"
   },
   "dependencies": {

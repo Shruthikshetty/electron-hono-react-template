@@ -47,7 +47,7 @@ A robust, modern template for building cross-platform desktop applications using
 
 ### Prerequisites
 
-- Node.js (v18 or higher recommended)
+- Node.js (v20 LTS or higher recommended)
 - npm (or bun/yarn/pnpm)
 
 ### Installation
@@ -79,6 +79,11 @@ Commands for managing your local SQLite database with Drizzle:
 - **Open Drizzle Studio** (Visual database editor):
   ```bash
   npm run drizzle:studio
+  ```
+- **Push Changes** (Prototyping):
+  Push schema changes directly to the database without generating migrations.
+  ```bash
+  npm run drizzle:push
   ```
 
 ### Testing
