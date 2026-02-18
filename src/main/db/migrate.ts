@@ -3,9 +3,10 @@ import path from 'node:path'
 import db from './index'
 
 export async function runMigrations(): Promise<void> {
-  const migrationsFolder = process.env.APP_RESOURCES_PATH
-    ? path.join(process.env.APP_RESOURCES_PATH, 'migrations')
-    : path.join(__dirname, '../../db/migrations')
+  if (!process.env.APP_RESOURCES_PATH) {
+    throw new Error('APP_RESOURCES_PATH is not set; cannot locate migrations folder')
+  }
+  const migrationsFolder = path.join(process.env.APP_RESOURCES_PATH, 'migrations')
 
   console.log(`Running migrations from ${migrationsFolder}`)
 

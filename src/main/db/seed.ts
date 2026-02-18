@@ -18,5 +18,6 @@ export async function seed(): Promise<void> {
     }
   } catch (error) {
     console.error('Seed failed:', error)
+    throw error
   }
 }

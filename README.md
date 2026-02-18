@@ -25,7 +25,7 @@ A robust, modern template for building cross-platform desktop applications using
 
 ## 📦 Project Structure
 
-```
+```text
 ├── electron.vite.config.ts  # Vite configuration for Electron
 ├── drizzle.config.ts        # Drizzle ORM configuration
 ├── electron-builder.yml     # Electron Builder configuration
@@ -104,19 +104,19 @@ npm run test
 
 Compile and package the application for your operating system:
 
-#### Windows
+### Windows
 
 ```bash
 npm run build:win
 ```
 
-#### macOS
+### macOS
 
 ```bash
 npm run build:mac
 ```
 
-#### Linux
+### Linux
 
 ```bash
 npm run build:linux
