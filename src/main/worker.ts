@@ -9,8 +9,22 @@ import base from './routes/index.route'
 import profile from './routes/profile/profile.index'
 import { serve } from '@hono/node-server'
 
+import { runMigrations } from './db/migrate'
+import { seed } from './db/seed'
+
 // create hono app
 const app = createApp()
+
+// run migrations
+const migrationPromise =
+  process.env.NODE_ENV === 'development'
+    ? Promise.resolve()
+    : runMigrations()
+        .then(() => seed())
+        .catch((err) => {
+          console.error('Migration/Seed failed:', err)
+          process.exit(1)
+        })
 
 //configure open api
 configureOpenApi(app)
@@ -41,6 +55,7 @@ process.parentPort.on('message', async (e) => {
   const { type, path, method, body } = e.data
 
   if (type === 'hono-request') {
+    await migrationPromise
     try {
       const res = await app.fetch(
         new Request(`http://localhost${path}`, {

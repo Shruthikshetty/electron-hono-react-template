@@ -22,6 +22,7 @@
     "build:linux": "electron-vite build && electron-builder --linux",
     "drizzle:generate": "drizzle-kit generate",
     "drizzle:studio": "drizzle-kit studio",
+    "drizzle:push": "drizzle-kit push",
     "test": "vitest"
   },
   "dependencies": {
@@ -48,6 +49,8 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "tailwindcss": "^4.2.0",
+    "@tailwindcss/vite": "^4.2.0",
     "drizzle-kit": "^0.31.9",
     "electron": "^39.2.6",
     "electron-builder": "^26.0.12",
